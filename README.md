@@ -1,67 +1,212 @@
-## Foundry
+===========================
+NFT Marketplace – Cyfrin Updraft Course Project
+===========================
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+This repository contains two ERC721 NFT contracts: a Basic NFT and a dynamic on-chain SVG Mood NFT.
+It also includes Foundry deployment scripts, interaction scripts, unit tests, and integration tests.
 
-Foundry consists of:
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+PROJECT SUMMARY
 
-## Documentation
+The project demonstrates:
 
-https://book.getfoundry.sh/
+ERC721 NFT minting (BasicNft)
 
-## Usage
+Dynamic on-chain SVG NFTs (MoodNft)
 
-### Build
+Mood state flipping using owner-only logic
 
-```shell
-$ forge build
-```
+Base64 metadata construction
 
-### Test
+On-chain SVG rendering
 
-```shell
-$ forge test
-```
+Foundry-based deployment scripts
 
-### Format
+Interaction scripts for minting and flipping moods
 
-```shell
-$ forge fmt
-```
+Unit tests and integration tests verifying functionality
 
-### Gas Snapshots
+FEATURES:
 
-```shell
-$ forge snapshot
-```
+Basic NFT
 
-### Anvil
+Standard ERC721 behavior
 
-```shell
-$ anvil
-```
+Public minting
 
-### Deploy
+Incremental token IDs
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
+URI stored per token
 
-### Cast
+Mood NFT
 
-```shell
-$ cast <subcommand>
-```
+Fully on-chain SVG NFT
 
-### Help
+Dynamic tokenURI based on mood state
 
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
-# Web3_Nft_MarketPlace_Project
+flipMood() function toggles between "happy" and "sad"
+
+Only the owner of the NFT may change the mood
+
+Token URI is generated in Base64-encoded JSON
+
+SVG images embedded directly in metadata
+
+Deployment Scripts
+
+Deploys BasicNft
+
+Deploys MoodNft
+
+Compatible with local and live networks
+
+Test Suite
+
+Unit tests for each contract's logic
+
+Integration tests covering minting + mood flipping
+
+Deployment tests
+
+Fuzz testing
+
+State verification
+
+Interaction Script
+
+Mint NFTs using CLI
+
+Flip NFT mood using CLI
+
+PROJECT STRUCTURE
+
+/
+├── foundry.toml
+├── lib/
+├── script/
+│ ├── DeployMoodNft.s.sol
+│ ├── DeplyBasicNft.s.sol
+│ └── Interactions.s.sol
+├── src/
+│ ├── BasicNft.sol
+│ └── MoodNft.sol
+└── test/
+├── unit/
+│ ├── BasicNftTest.t.sol
+│ ├── MoodNftTest.t.sol
+│ └── DeployMoodNftTest.t.sol
+├── intergrations/
+│ ├── BasicNftTest.t.sol
+│ └── MoodNftIntergrationTest.t.sol
+└── Interactions.s.sol
+
+CONTRACT OVERVIEW
+BasicNft.sol
+
+A simple ERC721 minting contract.
+
+Key functions:
+
+mintNft() : Mints a new NFT
+
+tokenURI(id) : Returns the stored metadata URI
+
+Uses internal counter for token IDs
+
+MoodNft.sol
+
+Dynamic on-chain NFT with mood state.
+
+Key features:
+
+Stores "happy" or "sad" in a mood enum
+
+flipMood(tokenId) toggles the mood
+
+Only NFT owner may flip mood
+
+tokenURI(tokenId) generates Base64 JSON metadata
+
+Metadata includes SVG image encoded directly on-chain
+
+TEST SUITE
+
+Unit tests:
+
+BasicNftTest.t.sol
+
+Tests minting
+
+Tests URI correctness
+
+MoodNftTest.t.sol
+
+Tests minting
+
+Tests mood flipping
+
+Tests permission checks
+
+Tests dynamic tokenURI content
+
+DeployMoodNftTest.t.sol
+
+Verifies deployment script functionality
+
+Integration tests:
+
+BasicNFT integration test
+
+MoodNFT integration test
+
+Test full flow: deploy -> mint -> flip -> verify URI
+
+Interaction script tests:
+
+Demonstrates minting and flipping via CLI
+
+To run all tests:
+forge test -vv
+
+DEPLOYMENT
+
+Deploy BasicNft:
+forge script script/DeplyBasicNft.s.sol --rpc-url $RPC_URL --private-key $PRIVATE_KEY --broadcast
+
+Deploy MoodNft:
+forge script script/DeployMoodNft.s.sol --rpc-url $RPC_URL --private-key $PRIVATE_KEY --broadcast
+
+SECURITY CONSIDERATIONS
+
+Ownership checks implemented for mood flipping
+
+Require statements validate token existence
+
+Uses OpenZeppelin ERC721 standard behavior
+
+No reentrancy concerns in current form
+
+Future marketplace addition must include proper withdrawal pattern, reentrancy guard, and access control
+
+WHAT I LEARNED
+
+On-chain SVG NFT design
+
+Base64 metadata creation
+
+State-driven dynamic NFTs
+
+Foundry deployment scripting
+
+Writing unit and integration tests
+
+Foundry cheatcodes
+
+Contract structure and modularity
+
+Separation of concerns in smart contracts
+
+
+ACKNOWLEDGEMENTS
+
+This project was created while following the Cyfrin Updraft curriculum, I am new to solidity programing and so I would like to thank Patrick Collins for these amazing free resources. 
